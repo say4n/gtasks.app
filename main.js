@@ -2,6 +2,10 @@ const { app, session, Menu, Tray } = require('electron');
 const { autoUpdater } = require("electron-updater")
 const { menubar } = require('menubar');
 const path = require('path');
+const log = require('electron-log');
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = "info"
 
 var AutoLaunch = require('auto-launch');
 var gtasksAutoLauncher = new AutoLaunch({
@@ -14,12 +18,13 @@ gtasksAutoLauncher.enable();
 gtasksAutoLauncher.isEnabled()
     .then(function(isEnabled){
         if(isEnabled){
+            log.info("Auto launch is enabled.")
             return;
         }
         gtasksAutoLauncher.enable();
     })
     .catch(function(error){
-        console.log("Error enabling auto-launch.", error)
+        log.error("Error enabling auto-launch.", error)
     });
 
 
@@ -57,7 +62,7 @@ app.on('ready', () => {
 
         session.defaultSession.cookies.get({})
             .then((cookies) => {
-                console.log("Wrote cookies to disk (mb.after-hide)")
+                log.info("Wrote cookies to disk (mb.after-hide)")
             });
     });
 
@@ -73,8 +78,8 @@ app.on('ready', () => {
 app.on('before-quit', () => {
     session.defaultSession.cookies.flushStore()
     .then(() => {
-        console.log("Wrote cookies to disk (app.before-quit)")
+        log.info("Wrote cookies to disk (app.before-quit)")
     }).catch((error) => {
-        console.error("Error writing cookies to disk", error)
+       log.error("Error writing cookies to disk", error)
     });
 })

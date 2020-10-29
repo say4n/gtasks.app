@@ -5,7 +5,6 @@
     "author": "Sayan Goswami",
     "license": "MIT",
     "repository": "github:say4n/gtasks.app",
-
     "main": "main.js",
     "scripts": {
         "start": "electron .",
@@ -20,16 +19,13 @@
             "icon": "tasks.icns",
             "extendInfo": {
                 "LSUIElement": 1
-            },
-            "target": [
-                "zip",
-                "dmg"
-            ]
+            }
         },
         "publish": "github"
     },
     "dependencies": {
         "auto-launch": "^5.0.5",
+        "electron-log": "^4.2.4",
         "electron-updater": "^4.3.5",
         "menubar": "^9.0.1"
     },
