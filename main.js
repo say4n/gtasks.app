@@ -3,6 +3,12 @@ const { autoUpdater } = require("electron-updater")
 const { menubar } = require('menubar');
 const path = require('path');
 const log = require('electron-log');
+const Store = require('electron-store');
+var AutoLaunch = require('auto-launch');
+
+const store = new Store();
+var doAutoLaunch = store.get("auto-launch", false);
+log.info(`doAutoLaunch: ${doAutoLaunch}`);
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info"
@@ -40,35 +46,50 @@ autoUpdater.on('update-downloaded', () => {
     })
 })
 
-var AutoLaunch = require('auto-launch');
 var gtasksAutoLauncher = new AutoLaunch({
 	name: 'GTasks',
 	path: '/Applications/GTasks.app',
 });
 
-gtasksAutoLauncher.enable();
+function setAutoLaunch() {
+    if (doAutoLaunch) {
+        gtasksAutoLauncher.enable();
+    } else {
+        gtasksAutoLauncher.disable();
+    }
 
-gtasksAutoLauncher.isEnabled()
+    gtasksAutoLauncher.isEnabled()
     .then(function(isEnabled){
         if(isEnabled){
             log.info("Auto launch is enabled.")
-            return;
         }
-        gtasksAutoLauncher.enable();
     })
     .catch(function(error){
         log.error("Error enabling auto-launch.", error)
     });
-
+}
 
 app.on('ready', () => {
     'use strict';
 
+    setAutoLaunch();
     const iconPath = path.join(__dirname, 'assets', 'tasksTemplate.png');
     const tray = new Tray(iconPath);
 
 	const contextMenu = Menu.buildFromTemplate([
         { role: 'about' },
+        {
+            label: 'Launch at Login',
+            type: 'checkbox',
+            checked: doAutoLaunch,
+            click: () => {
+                log.info(`doAutoLaunch: ${doAutoLaunch}`);
+                store.set("auto-launch", !doAutoLaunch);
+                doAutoLaunch = store.get("auto-launch");
+                setAutoLaunch();
+                log.info(`doAutoLaunch: ${doAutoLaunch}`);
+            }
+        },
         {
             label: 'Check for Updates',
             click: () => {
