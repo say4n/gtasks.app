@@ -3,6 +3,8 @@
     "description": "Google Tasks Menu Bar App",
     "version": "0.1.0",
     "author": "Sayan Goswami",
+    "license": "MIT",
+
     "main": "main.js",
     "scripts": {
         "start": "electron .",
