@@ -4,11 +4,13 @@
     "version": "0.1.0",
     "author": "Sayan Goswami",
     "license": "MIT",
+    "repository": "github:say4n/gtasks.app",
+
     "main": "main.js",
     "scripts": {
         "start": "electron .",
-        "pack": "electron-builder --dir",
-        "dist": "electron-builder"
+        "dist": "electron-builder --mac",
+        "release": "electron-builder --mac --publish"
     },
     "build": {
         "appId": "gtasks.app.sayan.page",
@@ -22,9 +24,9 @@
             "target": [
                 "zip",
                 "dmg"
-            ],
-            "publish": "github"
-        }
+            ]
+        },
+        "publish": "github"
     },
     "dependencies": {
         "auto-launch": "^5.0.5",
