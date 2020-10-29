@@ -1,4 +1,4 @@
-const { app, session, Menu, Tray } = require('electron');
+const { app, dialog, session, Menu, Tray } = require('electron');
 const { autoUpdater } = require("electron-updater")
 const { menubar } = require('menubar');
 const path = require('path');
@@ -6,6 +6,13 @@ const log = require('electron-log');
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = "info"
+
+autoUpdater.on('update-not-available', () => {
+    dialog.showMessageBox({
+        title: 'No Updates',
+        message: 'Current version is up-to-date.'
+    })
+})
 
 var AutoLaunch = require('auto-launch');
 var gtasksAutoLauncher = new AutoLaunch({
