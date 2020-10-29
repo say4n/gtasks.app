@@ -9,7 +9,7 @@
     "scripts": {
         "start": "electron .",
         "dist": "electron-builder --mac",
-        "release": "electron-builder --mac --publish always"
+        "release": "electron-builder --mac --publish onTagOrDraft"
     },
     "build": {
         "appId": "gtasks.app.sayan.page",
