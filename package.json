@@ -3,7 +3,6 @@
     "description": "Google Tasks Menu Bar App",
     "version": "0.1.0",
     "author": "Sayan Goswami",
-
     "main": "main.js",
     "scripts": {
         "start": "electron .",
@@ -13,7 +12,7 @@
     "build": {
         "appId": "gtasks.app.sayan.page",
         "mac": {
-            "category": "public.app-category.productivity",
+            "category": "public.app-category.utility",
             "darkModeSupport": true,
             "icon": "tasks.icns",
             "extendInfo": {
@@ -22,10 +21,11 @@
         }
     },
     "dependencies": {
+        "auto-launch": "^5.0.5",
         "menubar": "^9.0.1"
     },
     "devDependencies": {
-        "electron": "10.1.5",
+        "electron": "^10.1.5",
         "electron-builder": "^22.9.1"
     }
 }
