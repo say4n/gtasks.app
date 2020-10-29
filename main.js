@@ -1,4 +1,5 @@
 const { app, session, Menu, Tray } = require('electron');
+const { autoUpdater } = require("electron-updater")
 const { menubar } = require('menubar');
 const path = require('path');
 
@@ -33,7 +34,7 @@ app.on('ready', () => {
         {
             label: 'Check for Updates',
             click: () => {
-                console.log("Checking for updates");
+                autoUpdater.checkForUpdatesAndNotify();
             }
         },
         { type: 'separator' },
